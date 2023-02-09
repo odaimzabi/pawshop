@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnimalController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
@@ -20,4 +21,9 @@ Route::prefix("/auth")->group(function () {
     Route::post("/register", [AuthController::class, "register"])->name("auth.register");
     Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, "logout"])->name("auth.logout");
     Route::middleware('auth:sanctum')->get('/user', [AuthController::class, "user"])->name("auth.user");
+});
+
+
+Route::prefix("/animal")->group(function () {
+    Route::post("/", [AnimalController::class, "create"])->name("animal.create");
 });
