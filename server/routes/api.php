@@ -4,6 +4,7 @@ use App\Http\Controllers\AnimalController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,8 +20,8 @@ use App\Http\Controllers\AuthController;
 Route::prefix("/auth")->group(function () {
     Route::post("/login", [AuthController::class, "login"])->name("auth.login");
     Route::post("/register", [AuthController::class, "register"])->name("auth.register");
+    Route::middleware(['web', 'auth:sanctum'])->get('/user', [AuthController::class, "user"])->name("auth.user");
     Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, "logout"])->name("auth.logout");
-    Route::middleware('auth:sanctum')->get('/user', [AuthController::class, "user"])->name("auth.user");
 });
 
 

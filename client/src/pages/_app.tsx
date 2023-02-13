@@ -1,6 +1,15 @@
-import type { AppProps } from 'next/app';
-import '@/styles/globals.css';
+import { type AppType } from "next/app";
 
-export default function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
-}
+import { api } from "../utils/api";
+import "../styles/globals.css";
+import AppProvider from "../components/providers/AppProvider";
+
+const MyApp: AppType = ({ Component, pageProps }) => {
+  return (
+    <AppProvider>
+      <Component {...pageProps} />
+    </AppProvider>
+  );
+};
+
+export default api.withTRPC(MyApp);
