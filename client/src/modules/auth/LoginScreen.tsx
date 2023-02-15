@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AppLayout from "../../components/layouts/AppLayout";
-import { apiClient } from "../../lib/axios";
-import { useSanctum } from "react-sanctum";
-import { AxiosError } from "axios";
+import { useAuth } from "../../lib/auth/useAuth";
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { authenticated, signIn, user } = useSanctum();
+  const { signIn, redirectToDashboard } = useAuth();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     signIn(email, password)
-      .then((data) => console.log(data))
+      .then(async () => {
+        await redirectToDashboard();
+      })
       .catch((err) => console.log(err));
-    console.log(user);
   };
   return (
     <AppLayout>

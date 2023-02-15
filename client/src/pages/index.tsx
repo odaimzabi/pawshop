@@ -1,11 +1,9 @@
 import { type NextPage } from "next";
 
-import { api } from "../utils/api";
+import LandingPage from "../modules/landing-page/LandingPage";
 
 const Home: NextPage = () => {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
-
-  return <></>;
+  return <LandingPage />;
 };
 
 export default Home;
