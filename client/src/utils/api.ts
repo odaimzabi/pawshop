@@ -5,7 +5,7 @@
  *
  * We also create a few inference helpers for input and output types
  */
-import { httpBatchLink, loggerLink } from "@trpc/client";
+import { getFetch, httpBatchLink, loggerLink } from "@trpc/client";
 import { createTRPCNext } from "@trpc/next";
 import { type inferRouterInputs, type inferRouterOutputs } from "@trpc/server";
 import superjson from "superjson";
@@ -42,6 +42,13 @@ export const api = createTRPCNext<AppRouter>({
         }),
         httpBatchLink({
           url: `${getBaseUrl()}/api/trpc`,
+          fetch(url, init) {
+            const fetch = getFetch();
+            return fetch(url, {
+              ...init,
+              credentials: "include",
+            });
+          },
         }),
       ],
     };

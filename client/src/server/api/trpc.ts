@@ -16,12 +16,16 @@
  * database, the session, etc.
  */
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 /**
  * Replace this with an object if you want to pass things to
  * `createContextInner`.
  */
-type CreateContextOptions = Record<string, never>;
+type CreateContextOptions = {
+  req: NextApiRequest;
+  res: NextApiResponse;
+};
 
 /**
  * This helper generates the "internals" for a tRPC context. If you need to use
@@ -34,7 +38,10 @@ type CreateContextOptions = Record<string, never>;
  * @see https://create.t3.gg/en/usage/trpc#-servertrpccontextts
  */
 const createInnerTRPCContext = (_opts: CreateContextOptions) => {
-  return {};
+  return {
+    req: _opts.req,
+    res: _opts.res,
+  };
 };
 
 /**
@@ -44,7 +51,10 @@ const createInnerTRPCContext = (_opts: CreateContextOptions) => {
  * @see https://trpc.io/docs/context
  */
 export const createTRPCContext = (_opts: CreateNextContextOptions) => {
-  return createInnerTRPCContext({});
+  return createInnerTRPCContext({
+    req: _opts.req,
+    res: _opts.res,
+  });
 };
 
 /**
@@ -58,6 +68,7 @@ import superjson from "superjson";
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
   transformer: superjson,
+
   errorFormatter({ shape }) {
     return shape;
   },

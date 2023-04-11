@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import AppLayout from "../../components/layouts/AppLayout";
 import { useAuth } from "../../lib/auth/useAuth";
+import Link from "next/link";
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -9,8 +10,10 @@ export default function LoginScreen() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     signIn(email, password)
-      .then(async () => {
-        await redirectToDashboard();
+      .then(async (data) => {
+        if (data.signedIn == true) {
+          await redirectToDashboard();
+        }
       })
       .catch((err) => console.log(err));
   };
@@ -18,22 +21,17 @@ export default function LoginScreen() {
     <AppLayout>
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <img
-            className="mx-auto h-12 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Your Company"
-          />
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
             Sign in to your account
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
             Or{" "}
-            <a
-              href="#"
+            <Link
+              href="/auth/register"
               className="font-medium text-indigo-600 hover:text-indigo-500"
             >
-              start your 14-day free trial
-            </a>
+              Create your account
+            </Link>
           </p>
         </div>
 

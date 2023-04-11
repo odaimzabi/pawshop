@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import AppLayout from "../../components/layouts/AppLayout";
 import { apiClient } from "../../lib/axios";
+import Link from "next/link";
+import { useAuth } from "../../lib/auth/useAuth";
 export default function RegisterScreen() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { redirectToLogin } = useAuth();
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = apiClient
+    apiClient
       .post(
-        "http://localhost:8000/api/auth/register",
+        "api/auth/register",
         {
           name: fullName,
           email,
@@ -19,29 +22,24 @@ export default function RegisterScreen() {
           withCredentials: true,
         }
       )
-      .then((data) => data)
+      .then(async () => await redirectToLogin())
       .catch((err) => console.log(err));
   };
   return (
     <AppLayout>
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <img
-            className="mx-auto h-12 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Your Company"
-          />
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-            Sign in to your account
+            Create your account
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Or{" "}
-            <a
-              href="#"
+            Or if you have an account{" "}
+            <Link
+              href="/auth/login"
               className="font-medium text-indigo-600 hover:text-indigo-500"
             >
-              start your 14-day free trial
-            </a>
+              Sign in now
+            </Link>
           </p>
         </div>
 

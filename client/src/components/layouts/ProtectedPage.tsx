@@ -1,21 +1,22 @@
 import React, { useEffect } from "react";
 import { useAuth } from "../../lib/auth/useAuth";
+import NotAuthenticatedModal from "../common/NotAuthenticatedModal";
 
 type Props = {
   children: React.ReactNode;
 };
 
-const controller = new AbortController();
-
 //TODO add a modal if user is not authenticated
 
 export default function ProtectedPage({ children }: Props) {
-  const { redirectToLogin, authenticated } = useAuth();
-  useEffect(() => {
-    if (authenticated != null && authenticated == false) {
-      controller.abort();
-      redirectToLogin();
-    }
-  }, [authenticated, redirectToLogin]);
+  const { authenticated } = useAuth();
+  if (authenticated == false) {
+    return (
+      <div>
+        <NotAuthenticatedModal />
+        {children}
+      </div>
+    );
+  }
   return <div>{children}</div>;
 }

@@ -16,6 +16,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import classNames from "classnames";
+import Link from "next/link";
 
 const solutions = [
   {
@@ -101,7 +102,7 @@ type Props = {
 export default function Header({ children }: Props) {
   return (
     <>
-      <Popover className="border-b-1 relative border bg-white">
+      <Popover className="border-b-1 relative z-10 border bg-white">
         <div className="flex items-center justify-between p-6 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">
             <a href="#">
@@ -266,19 +267,19 @@ export default function Header({ children }: Props) {
               )}
             </Popover>
           </Popover.Group>
-          <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
-            <a
-              href="#"
-              className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
+          <div className="hidden items-center justify-end gap-4 md:flex md:flex-1 lg:w-0">
+            <Link
+              href="/auth/login"
+              className="text-indigo-600 hover:text-indigo-500"
             >
               Sign in
-            </a>
-            <a
-              href="#"
-              className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+            </Link>
+            <Link
+              href="/auth/register"
+              className="flex  items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
             >
               Sign up
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -367,20 +368,19 @@ export default function Header({ children }: Props) {
                   ))}
                 </div>
                 <div className="mt-6">
-                  <a
-                    href="#"
+                  <Link
+                    href="/auth/register"
                     className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                   >
                     Sign up
-                  </a>
+                  </Link>
                   <p className="mt-6 text-center text-base font-medium text-gray-500">
-                    Existing customer?{" "}
-                    <a
-                      href="#"
+                    <Link
+                      href="/auth/login"
                       className="text-indigo-600 hover:text-indigo-500"
                     >
                       Sign in
-                    </a>
+                    </Link>
                   </p>
                 </div>
               </div>

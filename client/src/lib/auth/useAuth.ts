@@ -9,11 +9,11 @@ type User = {
 export const useAuth = () => {
   const router = useRouter();
   const auth = useSanctum<User>();
-  const redirectToLogin = () => {
-    window.location.href = "/auth/login";
+  const redirectToLogin = async () => {
+    await router.push("/auth/login");
   };
   const redirectToDashboard = async () => {
-    await router.push("/dashboard");
+    await router.push("/dashboard/animals");
   };
   return { ...auth, redirectToLogin, redirectToDashboard };
 };
