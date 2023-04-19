@@ -3,15 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Services\S3Service;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
 
 class AuthController extends Controller
 {
+    protected $s3;
+    public function __construct(S3Service $s3)
+    {
+        $this->s3 = $s3;
+    }
     public function login(LoginRequest $request)
     {
 
@@ -22,6 +27,7 @@ class AuthController extends Controller
                 'token' => $user->createToken($request->email)->plainTextToken
             ], 200);
         }
+        return response()->json(["success" => false, "message" => "Invalid Credentials"], 404);
     }
 
     public function register(RegisterRequest $request)
@@ -51,7 +57,7 @@ class AuthController extends Controller
 
     public function user(Request $request)
     {
-        Log::info($request->user());
+
         return $request->user();
     }
 }

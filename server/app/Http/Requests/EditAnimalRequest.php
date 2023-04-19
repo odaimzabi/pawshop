@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Foundation\Http\FormRequest;
 
-class AnimalRequest extends FormRequest
+class EditAnimalRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,7 +31,7 @@ class AnimalRequest extends FormRequest
             "vaccinated" => "required|boolean",
             "weight" => "required|string|max:255",
             "name" => "required|string|max:255",
-            "image" => "required|string|max:255"
+            "image" => "sometimes|string|max:255"
         ];
     }
 }

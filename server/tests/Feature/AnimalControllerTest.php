@@ -8,12 +8,13 @@ use Tests\TestCase;
 
 class AnimalControllerTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * A basic feature test example.
      *
      * @return void
      */
-    public function test_example()
+    public function test_should_not_create_animal_if_fields_are_empty()
     {
         $response = $this->get('/');
 

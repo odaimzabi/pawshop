@@ -44,19 +44,18 @@ class AuthControllerTest extends TestCase
     public function test_should_show_error_if_email_doesnt_exist()
     {
         $response = $this->json("POST", route("auth.login"), [
-            "email" => "test@test.com",
+            "email" => "test5@test.com",
             "password" => "testpassword"
         ]);
-        $response->assertStatus(422)->assertJsonValidationErrors(["email"]);
+        $response->assertStatus(404)->assertJson(["success" => false, "message" => "Invalid Credentials"]);
     }
     public function test_should_show_error_if_password_doesnt_match()
     {
         $response = $this->json("POST", route("auth.login"), [
-            "email" => "test@test.com",
-            "password" => "testpassword22"
+            "email" => "johndoe@example.org",
+            "password" => "testpassword5"
         ]);
-
-        $response->assertStatus(422)->assertJsonValidationErrors(["email"]);
+        $response->assertStatus(404)->assertJson(["success" => false, "message" => "Invalid Credentials"]);
     }
     public function test_should_return_user_and_access_token_if_credentials_correct()
     {
@@ -64,8 +63,7 @@ class AuthControllerTest extends TestCase
             "email" => "johndoe@example.org",
             "password" => "testpassword"
         ]);
-
-        $response->assertStatus(200)->assertJsonStructure(["user", "access_token"]);
+        $response->assertStatus(200)->assertJsonStructure(["token"]);
     }
 
     public function test_should_throw_errors_if_fields_missing_on_register()

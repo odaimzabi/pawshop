@@ -195,6 +195,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\QueryLogServiceProvider::class,
+        App\Providers\S3ServiceProvider::class
     ],
 
     /*

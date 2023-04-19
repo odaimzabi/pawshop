@@ -10,10 +10,16 @@ class Animal extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["name", "age", "gender", "color", "vaccinated", "weight", "user_id"];
+    protected $fillable = ["name", "age", "gender", "color", "vaccinated", "weight", "user_id", "image"];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function announce()
+    {
+
+        return $this->belongsTo(Announce::class, 'animal_id', 'id');
     }
 }

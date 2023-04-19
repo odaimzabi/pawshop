@@ -1,9 +1,10 @@
 <?php
 
 use App\Http\Controllers\AnimalController;
+use App\Http\Controllers\AnnounceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-
+use App\Http\Controllers\UploadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,16 @@ Route::prefix("/auth")->group(function () {
 
 Route::prefix("/animal")->group(function () {
     Route::middleware("auth:sanctum")->post("/", [AnimalController::class, "create"])->name("animal.create");
+    Route::middleware("auth:sanctum")->put("/{id}", [AnimalController::class, "edit"])->name("animal.edit");
     Route::middleware("auth:sanctum")->get("/", [AnimalController::class, "showAll"])->name("animal.showAll");
     Route::middleware("auth:sanctum")->get("/{id}", [AnimalController::class, "showOne"])->name("animal.showOne");
+});
+Route::prefix("/announce")->group(function () {
+    Route::post("/", [AnnounceController::class, "create"])->name("announce.create");
+});
+
+
+Route::prefix("/upload")->group(function () {
+    Route::middleware("auth:sanctum")->post("/", [UploadController::class, "upload"])->name("upload.upload");
+    Route::middleware("auth:sanctum")->get("/get-file", [UploadController::class, "getFile"])->name("upload.getFile");
 });

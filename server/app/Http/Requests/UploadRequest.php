@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class AnimalRequest extends FormRequest
+class UploadRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,13 +24,7 @@ class AnimalRequest extends FormRequest
     public function rules()
     {
         return [
-            "age" => "required|string|max:3",
-            "gender" => ["required", Rule::in(["male", "female"])],
-            "color" => "required|string|max:10",
-            "vaccinated" => "required|boolean",
-            "weight" => "required|string|max:255",
-            "name" => "required|string|max:255",
-            "image" => "required|string|max:255"
+            'key' => 'required|string'
         ];
     }
 }
