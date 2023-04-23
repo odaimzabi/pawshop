@@ -1,8 +1,8 @@
 import React from "react";
-import DashboardContainer from "../../../components/common/DashboardContainer";
-import ProtectedPage from "../../../components/layouts/ProtectedPage";
-import Sidebar from "../../../components/layouts/Sidebar";
-import CreateAnimalForm from "../components/animals/CreateAnimalForm";
+import DashboardContainer from "../../../../components/common/DashboardContainer";
+import ProtectedPage from "../../../../components/layouts/ProtectedPage";
+import Sidebar from "../../../../components/layouts/Sidebar";
+import CreateAnimalForm from "../../components/animals/CreateAnimalForm";
 
 export default function CreateAnimalScreen() {
   return (

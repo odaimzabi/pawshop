@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useAuth } from "../../lib/auth/useAuth";
-import NotAuthenticatedModal from "../common/NotAuthenticatedModal";
+import NotAuthenticatedModal from "../common/Modals/NotAuthenticatedModal";
 
 type Props = {
   children: React.ReactNode;

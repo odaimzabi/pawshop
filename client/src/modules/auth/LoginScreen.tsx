@@ -1,21 +1,35 @@
-import React, { useState } from "react";
+import React from "react";
 import AppLayout from "../../components/layouts/AppLayout";
 import { useAuth } from "../../lib/auth/useAuth";
 import Link from "next/link";
+import { loginShape, type LoginDto } from "../../lib/dtos/auth";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Input } from "../../components/common/Input";
+import type { AxiosError } from "axios";
+import { toast } from "react-hot-toast";
+
+type LoginError = {
+  message: string;
+  success: boolean;
+};
+
 export default function LoginScreen() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { register, handleSubmit } = useForm<LoginDto>({
+    resolver: zodResolver(loginShape),
+  });
   const { signIn, redirectToDashboard } = useAuth();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    signIn(email, password)
+  const onSubmit = (data: LoginDto) => {
+    signIn(data.email, data.password, true)
       .then(async (data) => {
         if (data.signedIn == true) {
           await redirectToDashboard();
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err: AxiosError<LoginError>) =>
+        toast.error(err.response?.data.message as string)
+      );
   };
   return (
     <AppLayout>
@@ -37,7 +51,7 @@ export default function LoginScreen() {
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <form className="space-y-6" onSubmit={handleSubmit}>
+            <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
               <div>
                 <label
                   htmlFor="email"
@@ -46,13 +60,9 @@ export default function LoginScreen() {
                   Email address
                 </label>
                 <div className="mt-1">
-                  <input
-                    onChange={(e) => setEmail(e.target.value)}
-                    id="email"
-                    name="email"
+                  <Input
                     type="email"
-                    autoComplete="email"
-                    required
+                    {...register("email")}
                     className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
@@ -66,13 +76,9 @@ export default function LoginScreen() {
                   Password
                 </label>
                 <div className="mt-1">
-                  <input
-                    onChange={(e) => setPassword(e.target.value)}
-                    id="password"
-                    name="password"
+                  <Input
                     type="password"
-                    autoComplete="current-password"
-                    required
+                    {...register("password")}
                     className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>

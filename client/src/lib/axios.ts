@@ -5,7 +5,8 @@ export const apiClient: AxiosInstance = axios.create({
   baseURL: env.NEXT_PUBLIC_API_URL,
   headers: {
     "X-Requested-With": "XMLHttpRequest",
-    Accept: "application/json",
+    Accept: "application/json, text/plain, */*",
+    "Content-Type": "application/json",
   },
   withCredentials: true,
 });

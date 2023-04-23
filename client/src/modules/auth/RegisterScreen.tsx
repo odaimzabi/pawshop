@@ -1,22 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
 import AppLayout from "../../components/layouts/AppLayout";
 import { apiClient } from "../../lib/axios";
 import Link from "next/link";
 import { useAuth } from "../../lib/auth/useAuth";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { type RegisterDto, registerShape } from "../../lib/dtos/auth";
+import { Input } from "../../components/common/Input";
 export default function RegisterScreen() {
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { register, handleSubmit } = useForm<RegisterDto>({
+    resolver: zodResolver(registerShape),
+  });
   const { redirectToLogin } = useAuth();
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmit = (data: RegisterDto) => {
     apiClient
       .post(
         "api/auth/register",
         {
-          name: fullName,
-          email,
-          password,
+          name: data.fullName,
+          email: data.email,
+          password: data.password,
         },
         {
           withCredentials: true,
@@ -45,7 +48,7 @@ export default function RegisterScreen() {
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <form className="space-y-6" onSubmit={handleSubmit}>
+            <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
               <div>
                 <label
                   htmlFor="email"
@@ -54,11 +57,9 @@ export default function RegisterScreen() {
                   Full Name
                 </label>
                 <div className="mt-1">
-                  <input
-                    onChange={(e) => setFullName(e.target.value)}
-                    id="fullname"
-                    name="fullname"
+                  <Input
                     type="text"
+                    {...register("fullName")}
                     className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
@@ -71,13 +72,9 @@ export default function RegisterScreen() {
                   Email address
                 </label>
                 <div className="mt-1">
-                  <input
-                    onChange={(e) => setEmail(e.target.value)}
-                    id="email"
-                    name="email"
+                  <Input
                     type="email"
-                    autoComplete="email"
-                    required
+                    {...register("email")}
                     className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
@@ -91,13 +88,9 @@ export default function RegisterScreen() {
                   Password
                 </label>
                 <div className="mt-1">
-                  <input
-                    onChange={(e) => setPassword(e.target.value)}
-                    id="password"
-                    name="password"
+                  <Input
                     type="password"
-                    autoComplete="current-password"
-                    required
+                    {...register("password")}
                     className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
@@ -134,7 +127,7 @@ export default function RegisterScreen() {
                   type="submit"
                   className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
-                  Sign in
+                  Sign Up
                 </button>
               </div>
             </form>

@@ -2,9 +2,10 @@
 import React from "react";
 import { Input } from "../../../../components/common/Input";
 import {
-  createAnimalShape,
   type CreateAnimalDto,
-  type CreateAnimalResponse,
+  type EditAnimalDto,
+  editAnimalShape,
+  type Animal,
 } from "../../../../lib/dtos/animals";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -73,33 +74,46 @@ const colorOptions: Option[] = [
   },
 ];
 
-export default function CreateAnimalForm() {
+type Props = {
+  animal: Animal;
+};
+
+export default function EditAnimalForm({ animal }: Props) {
   const router = useRouter();
-  const { mutateAsync: createAnimal, isLoading } = useMutationWithType<
-    CreateAnimalResponse,
+  const animalId = router.query.id as string;
+  const { mutateAsync: editAnimal, isLoading } = useMutationWithType<
     CreateAnimalDto,
+    EditAnimalDto,
     AxiosError
-  >("post", "/api/animal");
+  >("put", `/api/animal/${animalId}`);
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
   } = useForm<CreateAnimalDto>({
-    resolver: zodResolver(createAnimalShape),
+    resolver: zodResolver(editAnimalShape),
+    defaultValues: {
+      age: animal.age,
+      color: animal.color,
+      gender: animal.gender,
+      image: animal.image,
+      name: animal.name,
+      vaccinated: animal.vaccinated ? "true" : "false",
+      weight: animal.weight,
+    },
   });
 
   const onSubmit = async (data: CreateAnimalDto) => {
     const isVaccinated = data.vaccinated == "true" ? true : false;
-    await createAnimal(
+    await editAnimal(
       { ...data, vaccinated: isVaccinated },
       {
         onError: () => {
-          toast.error("Failed to create an animal");
+          toast.error("Failed to edit the details");
         },
-        onSuccess: async () => {
-          toast.success("Successfully created an animal!");
-          await router.push("/dashboard/animals");
+        onSuccess: () => {
+          toast.success("Successfully edited the details!");
         },
       }
     );
@@ -123,11 +137,10 @@ export default function CreateAnimalForm() {
                 id="payment-details-heading"
                 className="text-lg font-medium leading-6 text-gray-900"
               >
-                New Animal
+                Edit
               </h2>
               <p className="mt-1 text-sm text-gray-500">
-                Please fill in the inputs to add your new animal into the
-                account
+                Please fill in the inputs to edit your animal
               </p>
             </div>
 

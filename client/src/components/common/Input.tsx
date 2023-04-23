@@ -107,7 +107,10 @@ export const Input = React.forwardRef(
       {errorMessage && (
         <ErrorDropdown
           message={errorMessage}
-          className="absolute right-0 mr-1"
+          className={classNames(
+            "absolute right-0 bottom-2",
+            type == "number" ? " bottom-2 mr-10" : "mr-1"
+          )}
         />
       )}
     </div>

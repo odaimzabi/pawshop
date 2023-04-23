@@ -12,4 +12,8 @@ class AnnounceController extends Controller
         Announce::create(["user_id" => 1, "image" => "", "description" => "test", "title" => "test", "video" => ""]);
         return response()->json(["test" => Announce::with("animal")->get()], 201);
     }
+
+    public function showAnimals(Request $request)
+    {
+    }
 }

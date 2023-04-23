@@ -1,9 +1,9 @@
 import React from "react";
-import Sidebar from "../../../components/layouts/Sidebar";
+import Sidebar from "../../../../components/layouts/Sidebar";
 import { PlusIcon } from "@heroicons/react/24/outline";
-import DashboardContainer from "../../../components/common/DashboardContainer";
-import Pagination from "../../../components/common/Pagination";
+import DashboardContainer from "../../../../components/common/DashboardContainer";
 import classNames from "classnames";
+import Link from "next/link";
 
 const plans = [
   {
@@ -42,13 +42,14 @@ export default function AnnouncementsScreen() {
               </p>
             </div>
             <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-              <button
+              <Link
+                href={"/dashboard/announcements/create"}
                 type="button"
                 className="flex flex-row items-center gap-1 rounded-md bg-indigo-600 py-1.5 px-3 text-center text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 <PlusIcon className="h-5 w-5" />
                 <span>Add Listing</span>
-              </button>
+              </Link>
             </div>
           </div>
           <div className="-mx-6 mt-10 ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg">
@@ -59,20 +60,15 @@ export default function AnnouncementsScreen() {
                     scope="col"
                     className="py-3.5 pl-6 pr-3 text-left text-sm font-semibold text-gray-900"
                   >
-                    Name
+                    Title
                   </th>
                   <th
                     scope="col"
                     className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
                   >
-                    Date
+                    Animal name
                   </th>
-                  <th
-                    scope="col"
-                    className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
-                  >
-                    Animal
-                  </th>
+
                   <th
                     scope="col"
                     className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
@@ -83,7 +79,7 @@ export default function AnnouncementsScreen() {
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                   >
-                    Price
+                    Animal Details
                   </th>
                   <th scope="col" className="relative py-3.5 pl-3 pr-6">
                     <span className="sr-only">Select</span>
@@ -142,15 +138,7 @@ export default function AnnouncementsScreen() {
                     >
                       {plan.storage}
                     </td>
-                    <td
-                      className={classNames(
-                        planIdx === 0 ? "" : "border-t border-gray-200",
-                        "px-3 py-3.5 text-sm text-gray-500"
-                      )}
-                    >
-                      <div className="sm:hidden">{plan.price}/mo</div>
-                      <div className="hidden sm:block">{plan.price}/month</div>
-                    </td>
+
                     <td
                       className={classNames(
                         planIdx === 0 ? "" : "border-t border-transparent",
@@ -173,7 +161,6 @@ export default function AnnouncementsScreen() {
               </tbody>
             </table>
           </div>
-          <Pagination />
         </div>
       </DashboardContainer>
     </Sidebar>

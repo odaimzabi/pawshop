@@ -13,7 +13,6 @@ export const animalRouter = createTRPCRouter({
         const response = await apiClient.post("/api/animal", input, {
           headers: {
             Cookie: `${ctx.req.headers.cookie as string};`,
-            "X-XSRF-TOKEN": ctx.req.cookies["XSRF-TOKEN"],
           },
         });
       } catch (err: AxiosError | unknown) {

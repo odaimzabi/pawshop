@@ -8,8 +8,6 @@ import {
   ChartBarIcon,
   CursorArrowRaysIcon,
   LifebuoyIcon,
-  PhoneIcon,
-  PlayIcon,
   ShieldCheckIcon,
   Squares2X2Icon,
   XMarkIcon,
@@ -17,7 +15,8 @@ import {
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import classNames from "classnames";
 import Link from "next/link";
-
+import Image from "next/image";
+import { type User, useAuth } from "../../lib/auth/useAuth";
 const solutions = [
   {
     name: "Analytics",
@@ -52,10 +51,7 @@ const solutions = [
     icon: ArrowPathIcon,
   },
 ];
-const callsToAction = [
-  { name: "Watch Demo", href: "#", icon: PlayIcon },
-  { name: "Contact Sales", href: "#", icon: PhoneIcon },
-];
+
 const resources = [
   {
     name: "Help Center",
@@ -85,34 +81,65 @@ const resources = [
     icon: ShieldCheckIcon,
   },
 ];
-const recentPosts = [
-  { id: 1, name: "Boost your conversion rate", href: "#" },
-  {
-    id: 2,
-    name: "How to use search engine optimization to drive traffic to your site",
-    href: "#",
-  },
-  { id: 3, name: "Improve your customer experience", href: "#" },
-];
 
 type Props = {
   children: React.ReactNode;
 };
 
+const AuthStatus = ({ user }: { user: User }) => (
+  <>
+    {!user.id ? (
+      <div className="hidden items-center justify-end gap-4 md:flex md:flex-1 lg:w-0">
+        <Link
+          href="/auth/login"
+          className="text-indigo-600 hover:text-indigo-500"
+        >
+          Sign in
+        </Link>
+        <Link
+          href="/auth/register"
+          className="flex  items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+        >
+          Sign up
+        </Link>
+      </div>
+    ) : (
+      <div className="hidden items-center justify-end gap-4 md:flex md:flex-1 lg:w-0">
+        <Link
+          href="/auth/login"
+          className="text-indigo-600 hover:text-indigo-500"
+        >
+          Logout
+        </Link>
+        <Link
+          href="/dashboard/animals"
+          className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+        >
+          Dashboard
+        </Link>
+      </div>
+    )}
+  </>
+);
+
 export default function Header({ children }: Props) {
+  const { user } = useAuth();
+  console.log(user);
   return (
     <>
       <Popover className="border-b-1 relative z-10 border bg-white">
         <div className="flex items-center justify-between p-6 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">
-            <a href="#">
+            <Link href="/" className="flex items-center gap-2">
               <span className="sr-only">Your Company</span>
-              <img
-                className="h-8 w-auto sm:h-10"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                alt=""
+              <Image
+                src="/imgs/pawshop_logo.png"
+                width={50}
+                height={50}
+                alt="logo"
               />
-            </a>
+              <h1 className="text-xl font-bold text-black">Pawshop</h1>
+            </Link>
           </div>
           <div className="-my-2 -mr-2 md:hidden">
             <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
@@ -267,20 +294,7 @@ export default function Header({ children }: Props) {
               )}
             </Popover>
           </Popover.Group>
-          <div className="hidden items-center justify-end gap-4 md:flex md:flex-1 lg:w-0">
-            <Link
-              href="/auth/login"
-              className="text-indigo-600 hover:text-indigo-500"
-            >
-              Sign in
-            </Link>
-            <Link
-              href="/auth/register"
-              className="flex  items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-            >
-              Sign up
-            </Link>
-          </div>
+          <AuthStatus user={user} />
         </div>
 
         <Transition
@@ -368,20 +382,7 @@ export default function Header({ children }: Props) {
                   ))}
                 </div>
                 <div className="mt-6">
-                  <Link
-                    href="/auth/register"
-                    className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-                  >
-                    Sign up
-                  </Link>
-                  <p className="mt-6 text-center text-base font-medium text-gray-500">
-                    <Link
-                      href="/auth/login"
-                      className="text-indigo-600 hover:text-indigo-500"
-                    >
-                      Sign in
-                    </Link>
-                  </p>
+                  <AuthStatus user={user} />
                 </div>
               </div>
             </div>

@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useSanctum } from "react-sanctum";
 
-type User = {
+export type User = {
   id: number;
   email: string;
   name: string;
