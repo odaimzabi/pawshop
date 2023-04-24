@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Animal;
+use App\Services\S3Service;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AnimalRequest;
 use App\Http\Requests\EditAnimalRequest;
-use App\Services\S3Service;
 
 class AnimalController extends Controller
 {
@@ -21,7 +21,7 @@ class AnimalController extends Controller
     {
         $animal = Animal::create([...$request->validated(), "user_id" => $request->user()->id]);
         $request->user()->animals()->save($animal);
-        return response()->json(["animal" => $animal], 201);
+        return response()->json(["success" => true, "animal" => $animal], 201);
     }
     public function showAll(Request $request)
     {
@@ -30,7 +30,7 @@ class AnimalController extends Controller
         foreach ($animals as $animal) {
             $animal["image"] = $this->s3->getFile($animal->image);
         }
-        return response()->json(["animals" => $animals], 200);
+        return response()->json(["success" => true, "animals" => $animals], 200);
     }
 
     public function showOne(Request $request, string $id)
@@ -41,7 +41,7 @@ class AnimalController extends Controller
         ])->first(["name", "age", "gender", "color", "vaccinated", "weight", "image"]);
 
         if ($animal == null) {
-            return response()->json(["animal" => null], 404);
+            return response()->json(["success" => false, "animal" => null], 404);
         }
         return response()->json(["animal" => $animal], 200);
     }

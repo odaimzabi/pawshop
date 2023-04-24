@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UploadRequest;
 use App\Services\S3Service;
+use App\Http\Requests\UploadRequest;
 
 class UploadController extends Controller
 {
@@ -17,13 +17,13 @@ class UploadController extends Controller
         $validatedRequest = $request->validated();
         $key = $validatedRequest["key"];
         $file = $this->s3->uploadFile($key);
-        return response()->json(["url" => $file["url"], "newKey" => $file["newKey"]]);
+        return response()->json(["success" => true, "url" => $file["url"], "newKey" => $file["newKey"]]);
     }
 
     public function getFile(UploadRequest $request)
     {
         $validatedRequest = $request->validated();
         $key = $validatedRequest["key"];
-        return response()->json(["url" => $this->s3->uploadFile($key)]);
+        return response()->json(["success" => true, "url" => $this->s3->uploadFile($key)]);
     }
 }

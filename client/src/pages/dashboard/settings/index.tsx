@@ -1,5 +1,6 @@
 import React from "react";
+import SettingsScreen from "../../../modules/settings/SettingsScreen";
 
-export default function index() {
-  return <div>index</div>;
+export default function SettingsPage() {
+  return <SettingsScreen />;
 }

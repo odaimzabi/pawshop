@@ -88,7 +88,7 @@ type Props = {
 
 const AuthStatus = ({ user }: { user: User }) => (
   <>
-    {!user.id ? (
+    {!user ? (
       <div className="hidden items-center justify-end gap-4 md:flex md:flex-1 lg:w-0">
         <Link
           href="/auth/login"

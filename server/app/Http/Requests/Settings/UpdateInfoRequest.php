@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Settings;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends FormRequest
+class UpdateInfoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +24,11 @@ class LoginRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            "email" => "required|email",
-            "password" => "required|min:6"
+        return   [
+            "email" => "required|email|unique:users,email",
+            "name" => "required|string|max:255",
+            "image" => "sometimes|string|max:255",
+            "username" => "sometimes|string|max:255"
         ];
     }
 }

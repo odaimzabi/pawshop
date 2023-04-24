@@ -24,6 +24,7 @@ class AuthController extends Controller
         if (Auth::attempt($request->validated())) {
             $request->session()->regenerate();
             return response()->json([
+                'success' => true,
                 'token' => $user->createToken($request->email)->plainTextToken
             ], 200);
         }
@@ -58,6 +59,6 @@ class AuthController extends Controller
     public function user(Request $request)
     {
 
-        return $request->user();
+        return User::select("id", "name", "username", "email", "image")->where("id", $request->user()->id)->get();
     }
 }

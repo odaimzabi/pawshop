@@ -1,10 +1,12 @@
 <?php
 
-use App\Http\Controllers\AnimalController;
-use App\Http\Controllers\AnnounceController;
+use App\Models\Announce;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\UploadController;
+use App\Http\Controllers\AnnounceController;
+use App\Http\Controllers\SettingsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,8 +36,13 @@ Route::prefix("/animal")->group(function () {
 });
 Route::prefix("/announce")->group(function () {
     Route::post("/", [AnnounceController::class, "create"])->name("announce.create");
+    Route::get("/animals", [AnnounceController::class, "showAnimals"])->name("announce.showAnimals");
 });
 
+Route::prefix("/settings")->group(function () {
+    Route::middleware("auth:sanctum")->put("/update-info", [SettingsController::class, "updateInfo"])->name("settings.updateInfo");
+    Route::middleware("auth:sanctum")->put("/update-password", [SettingsController::class, "updatePassword"])->name("settings.updatePassword");
+});
 
 Route::prefix("/upload")->group(function () {
     Route::middleware("auth:sanctum")->post("/", [UploadController::class, "upload"])->name("upload.upload");
