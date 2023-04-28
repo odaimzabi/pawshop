@@ -1,43 +1,11 @@
-import type { SVGProps } from "react";
-import {
-  ChatBubbleBottomCenterTextIcon,
-  ChatBubbleLeftRightIcon,
-  InboxIcon,
-  QuestionMarkCircleIcon,
-} from "@heroicons/react/24/outline";
+import { ChatBubbleBottomCenterTextIcon } from "@heroicons/react/24/outline";
 import { SparklesIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
 import DogIcon from "../../components/icons/DogIcon";
 import PodcastIcon from "../../components/icons/PodcastIcon";
 import HandShakeIcon from "../../components/icons/HandShakeIcon";
 import AppLayout from "../../components/layouts/AppLayout";
-const solutions = [
-  {
-    name: "Inbox",
-    description:
-      "Get a better understanding of where your traffic is coming from.",
-    href: "#",
-    icon: InboxIcon,
-  },
-  {
-    name: "Messaging",
-    description: "Speak directly to your customers in a more meaningful way.",
-    href: "#",
-    icon: ChatBubbleBottomCenterTextIcon,
-  },
-  {
-    name: "Live Chat",
-    description: "Your customers' data will be safe and secure.",
-    href: "#",
-    icon: ChatBubbleLeftRightIcon,
-  },
-  {
-    name: "Knowledge Base",
-    description: "Connect with third-party tools that you're already using.",
-    href: "#",
-    icon: QuestionMarkCircleIcon,
-  },
-];
+
 const features = [
   {
     name: "Add your animals",
@@ -110,11 +78,7 @@ export default function LandingPage() {
                       Will take care of your animals.
                     </span>
                   </h1>
-                  <p className="mx-auto mt-6 max-w-lg text-center text-xl text-indigo-200 sm:max-w-3xl">
-                    Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure
-                    qui lorem cupidatat commodo. Elit sunt amet fugiat veniam
-                    occaecat fugiat aliqua.
-                  </p>
+
                   <div className="mx-auto mt-10 max-w-sm sm:flex sm:max-w-none sm:justify-center">
                     <div className="space-y-4 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5 sm:space-y-0">
                       <a

@@ -30,7 +30,7 @@ function MediaUpload({ type, updateAssets, isUploaded }: Props) {
           if (!e.target.files) return;
           await handleUpload(e, e.target.files[0]);
         }}
-        style={{ display: "none", position: "absolute" }}
+        style={{ display: "none" }}
         id={type == "image" ? "upload-image" : "upload-video"}
       />
     </div>

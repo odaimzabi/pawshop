@@ -8,9 +8,11 @@ type Props = {
 
 export default function AppLayout({ children }: Props) {
   return (
-    <Header>
-      {children}
-      <Footer />
-    </Header>
+    <>
+      <Header>
+        {children}
+        <Footer />
+      </Header>
+    </>
   );
 }

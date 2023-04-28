@@ -10,7 +10,7 @@ export type User = {
 };
 export const useAuth = () => {
   const router = useRouter();
-  const auth = useSanctum<User[]>();
+  const auth = useSanctum<User>();
   const redirectToLogin = async () => {
     await router.push("/auth/login");
   };

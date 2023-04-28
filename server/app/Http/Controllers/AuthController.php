@@ -58,7 +58,10 @@ class AuthController extends Controller
 
     public function user(Request $request)
     {
-
-        return User::select("id", "name", "username", "email", "image")->where("id", $request->user()->id)->get();
+        $user = User::select("id", "name", "username", "email", "image")->where("id", $request->user()->id)->first();
+        if (!is_null($user->image)) {
+            $user->image = $this->s3->getFile($user->image);
+        }
+        return $user;
     }
 }

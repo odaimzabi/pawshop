@@ -10,7 +10,7 @@
 const config = {
   reactStrictMode: true,
   images: {
-    domains: ["pawshop.s3.eu-central-1.amazonaws.com"],
+    domains: ["pawshop.s3.eu-central-1.amazonaws.com", "images.unsplash.com"],
   },
   /**
    * If you have the "experimental: { appDir: true }" setting enabled, then you

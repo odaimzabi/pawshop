@@ -90,5 +90,7 @@ export const useUpload = (
     handleUploadedState,
     handleUpload,
     handleUploadState,
+    uploading,
+    uploaded,
   };
 };
