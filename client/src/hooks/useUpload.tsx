@@ -49,7 +49,7 @@ export const useUpload = (
       setUploading(false);
       setUploaded(true);
       updateAssets(newKey);
-      toast.success("Successfully upload the file");
+      toast.success("Successfully uploaded the file");
     } catch {
       toast.error("Failed to upload the asset");
       setUploading(false);

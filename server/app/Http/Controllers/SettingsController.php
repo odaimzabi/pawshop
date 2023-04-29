@@ -16,16 +16,30 @@ class SettingsController extends Controller
     {
         $this->s3 = $s3;
     }
-    public function updateInfo(UpdateInfoRequest $request)
-    {
-        if (!$request->user()->update($request->validated())) {
-            return response()->json(["success" => false, "message" => "Failed to update user details"], 400);
-        }
 
-        $user = User::select("id", "name", "email", "image", "username")->where("id", $request->user()->id)->first();
+    private function updateUserImage($user)
+    {
+
         if (!is_null($user->image)) {
             $user->image = $this->s3->getFile($user->image);
         }
+        return $user;
+    }
+
+    public function updateInfo(UpdateInfoRequest $request)
+    {
+        $validatedRequest = $request->validated();
+        $user = clone $request->user();
+
+        $matchingUser = User::select("email", "id")->where("email", $validatedRequest["email"])->first();
+        if (!is_null($matchingUser) && $matchingUser->id != $user->id) {
+            $user = $this->updateUserImage($user);
+            return response()->json(["success" => true, "user" => $user], 200);
+        }
+
+        $user->update($request->validated());
+        $user = $this->updateUserImage($user);
+
         return response()->json(["success" => true, "user" => $user], 200);
     }
 

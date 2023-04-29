@@ -55,7 +55,7 @@ const metrics = [
 export default function LandingPage() {
   return (
     <div className="bg-white">
-      <AppLayout>
+      <AppLayout title="Home">
         <main>
           <div className="relative mt-3">
             <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gray-100" />

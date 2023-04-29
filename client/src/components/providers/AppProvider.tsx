@@ -18,7 +18,7 @@ export default function AppProvider({ children }: Props) {
     <>
       <main className={`${mainFont.variable} font-main`}>
         <Sanctum config={sanctumConfig} checkOnInit={true}>
-          <NextNProgress color="#FC4519" />
+          <NextNProgress color="#7d3c98" />
           <Toaster position="bottom-right" />
           {children}
         </Sanctum>

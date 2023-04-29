@@ -13,10 +13,12 @@ use App\Http\Requests\RegisterRequest;
 class AuthController extends Controller
 {
     protected $s3;
+
     public function __construct(S3Service $s3)
     {
         $this->s3 = $s3;
     }
+
     public function login(LoginRequest $request)
     {
 
@@ -47,9 +49,9 @@ class AuthController extends Controller
         ], 400);
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
-        $request->user()->currentAccessToken()->delete();
+        auth('web')->logout();
         return response()->json([
             "success" => true,
             "message" => "Sucessfully logged out the user."

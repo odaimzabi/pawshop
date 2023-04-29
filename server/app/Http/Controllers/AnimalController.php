@@ -13,16 +13,19 @@ class AnimalController extends Controller
 {
 
     protected $s3;
+
     public function __construct(S3Service $s3)
     {
         $this->s3 = $s3;
     }
+
     public function create(AnimalRequest $request)
     {
         $animal = Animal::create([...$request->validated(), "user_id" => $request->user()->id]);
         $request->user()->animals()->save($animal);
         return response()->json(["success" => true, "animal" => $animal], 201);
     }
+
     public function showAll(Request $request)
     {
         $animals = Animal::with('user:id')->where('user_id', $request->user()->id)->get(["id", "name", "vaccinated", "image"]);

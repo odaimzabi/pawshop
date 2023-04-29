@@ -1,7 +1,6 @@
 import React from "react";
 import Sidebar from "../../../components/layouts/Sidebar";
 import DashboardContainer from "../../../components/common/DashboardContainer";
-import { EyeIcon, PlusIcon } from "@heroicons/react/24/outline";
 import classNames from "classnames";
 import Pagination from "../../../components/common/Pagination";
 
@@ -40,15 +39,6 @@ export default function ReservationsScreen() {
                   0 reservations
                 </strong>{" "}
               </p>
-            </div>
-            <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-              <button
-                type="button"
-                className="flex flex-row items-center gap-1 rounded-md bg-indigo-600 py-1.5 px-3 text-center text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                <EyeIcon className="h-5 w-5" />
-                <span>View Listings</span>
-              </button>
             </div>
           </div>
           <div className="-mx-6 mt-10 ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg">

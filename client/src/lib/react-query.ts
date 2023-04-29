@@ -4,7 +4,6 @@ import {
   type UseQueryOptions,
   type QueryFunction,
   useQuery,
-  type QueryKey,
 } from "@tanstack/react-query";
 import {
   type AxiosRequestConfig,

@@ -2,7 +2,7 @@ import { z } from "zod";
 import type { User } from "../../auth/useAuth";
 
 export const updateInfoShape = z.object({
-  email: z.string().email({ message: "Invalid email" }),
+  email: z.string().optional(),
   name: z.string().min(1, { message: "Name is required" }),
   username: z.string().optional(),
   image: z.string().optional(),

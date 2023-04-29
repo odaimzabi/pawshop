@@ -25,7 +25,7 @@ class UpdateInfoRequest extends FormRequest
     public function rules()
     {
         return   [
-            "email" => "sometimes|email|unique:users,email",
+            "email" => "sometimes|email",
             "name" => "required|string|max:255",
             "image" => "sometimes|string|max:255",
             "username" => "sometimes|string|max:255"

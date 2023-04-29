@@ -7,6 +7,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type RegisterDto, registerShape } from "../../lib/dtos/auth";
 import { Input } from "../../components/common/Input";
+import { toast } from "react-hot-toast";
+import type { AxiosError } from "axios";
 export default function RegisterScreen() {
   const { register, handleSubmit } = useForm<RegisterDto>({
     resolver: zodResolver(registerShape),
@@ -26,10 +28,10 @@ export default function RegisterScreen() {
         }
       )
       .then(async () => await redirectToLogin())
-      .catch((err) => console.log(err));
+      .catch((err: AxiosError) => toast.error(err.message));
   };
   return (
-    <AppLayout>
+    <AppLayout title="Create an account">
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">

@@ -1,15 +1,11 @@
 import { Fragment } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import {
-  ArrowPathIcon,
   Bars3Icon,
   BookmarkSquareIcon,
   CalendarIcon,
-  ChartBarIcon,
-  CursorArrowRaysIcon,
   LifebuoyIcon,
   ShieldCheckIcon,
-  Squares2X2Icon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
@@ -17,38 +13,34 @@ import classNames from "classnames";
 import Link from "next/link";
 import Image from "next/image";
 import { type User, useAuth } from "../../lib/auth/useAuth";
+import DogIcon from "../icons/DogIcon";
+import PodcastIcon from "../icons/PodcastIcon";
+import AlbumIcon from "../icons/AlbumIcon";
+import SettingsIcon from "../icons/SettingsIcon";
 const solutions = [
   {
-    name: "Analytics",
-    description:
-      "Get a better understanding of where your traffic is coming from.",
-    href: "#",
-    icon: ChartBarIcon,
+    name: "My Animals",
+    description: "My Animals",
+    href: "/dashboard/animals",
+    icon: DogIcon,
   },
   {
-    name: "Engagement",
-    description: "Speak directly to your customers in a more meaningful way.",
-    href: "#",
-    icon: CursorArrowRaysIcon,
+    name: "Announcements",
+    description: "Announcements",
+    href: "/dashboard/announcements",
+    icon: PodcastIcon,
   },
   {
-    name: "Security",
-    description: "Your customers' data will be safe and secure.",
-    href: "#",
-    icon: ShieldCheckIcon,
+    name: "Reservations",
+    description: "Reservations",
+    href: "/dashboard/reservations",
+    icon: AlbumIcon,
   },
   {
-    name: "Integrations",
-    description: "Connect with third-party tools that you're already using.",
-    href: "#",
-    icon: Squares2X2Icon,
-  },
-  {
-    name: "Automations",
-    description:
-      "Build strategic funnels that will drive your customers to convert",
-    href: "#",
-    icon: ArrowPathIcon,
+    name: "Settings",
+    description: "Settings",
+    href: "/dashboard/settings",
+    icon: SettingsIcon,
   },
 ];
 
@@ -123,8 +115,7 @@ const AuthStatus = ({ user }: { user: User }) => (
 );
 
 export default function Header({ children }: Props) {
-  const { user } = useAuth();
-  console.log(user);
+  const { user, logout } = useAuth();
   return (
     <>
       <Popover className="border-b-1 relative z-10 border bg-white">
@@ -314,10 +305,11 @@ export default function Header({ children }: Props) {
               <div className="px-5 pt-5 pb-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <img
-                      className="h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                      alt="Your Company"
+                    <Image
+                      src="/imgs/pawshop_logo.png"
+                      width={50}
+                      height={50}
+                      alt="logo"
                     />
                   </div>
                   <div className="-mr-2">
@@ -330,12 +322,12 @@ export default function Header({ children }: Props) {
                 <div className="mt-6">
                   <nav className="grid grid-cols-1 gap-7">
                     {solutions.map((solution) => (
-                      <a
+                      <Link
                         key={solution.name}
                         href={solution.href}
                         className="-m-3 flex items-center rounded-lg p-3 hover:bg-gray-50"
                       >
-                        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-indigo-500 text-white">
+                        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-violet-700 text-white">
                           <solution.icon
                             className="h-6 w-6"
                             aria-hidden="true"
@@ -344,43 +336,30 @@ export default function Header({ children }: Props) {
                         <div className="ml-4 text-base font-medium text-gray-900">
                           {solution.name}
                         </div>
-                      </a>
+                      </Link>
                     ))}
                   </nav>
                 </div>
               </div>
               <div className="py-6 px-5">
-                <div className="grid grid-cols-2 gap-4">
-                  <a
-                    href="#"
-                    className="text-base font-medium text-gray-900 hover:text-gray-700"
+                <nav className="grid grid-cols-1 gap-7">
+                  <button
+                    className="-m-3 flex items-center rounded-lg p-3 text-center hover:bg-gray-50"
+                    onClick={async () => await logout()}
                   >
-                    Pricing
-                  </a>
-
-                  <a
-                    href="#"
-                    className="text-base font-medium text-gray-900 hover:text-gray-700"
+                    <div className="text-base font-medium text-gray-900">
+                      Logout
+                    </div>
+                  </button>
+                  <Link
+                    className="-m-3 flex items-center rounded-lg p-3 text-center hover:bg-gray-50"
+                    href="/dashboard/animals"
                   >
-                    Docs
-                  </a>
-
-                  <a
-                    href="#"
-                    className="text-base font-medium text-gray-900 hover:text-gray-700"
-                  >
-                    Enterprise
-                  </a>
-                  {resources.map((resource) => (
-                    <a
-                      key={resource.name}
-                      href={resource.href}
-                      className="text-base font-medium text-gray-900 hover:text-gray-700"
-                    >
-                      {resource.name}
-                    </a>
-                  ))}
-                </div>
+                    <div className="text-base font-medium text-gray-900">
+                      Dashboard
+                    </div>
+                  </Link>
+                </nav>
                 <div className="mt-6">
                   <AuthStatus user={user} />
                 </div>

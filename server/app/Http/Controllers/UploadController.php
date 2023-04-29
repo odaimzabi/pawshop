@@ -8,10 +8,12 @@ use App\Http\Requests\UploadRequest;
 class UploadController extends Controller
 {
     protected $s3;
+
     public function __construct(S3Service $s3)
     {
         $this->s3 = $s3;
     }
+
     public function upload(UploadRequest $request)
     {
         $validatedRequest = $request->validated();

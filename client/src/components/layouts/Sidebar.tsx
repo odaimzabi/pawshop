@@ -1,9 +1,5 @@
 import { Transition, Dialog, Menu } from "@headlessui/react";
-import {
-  XMarkIcon,
-  Bars3BottomLeftIcon,
-  BellIcon,
-} from "@heroicons/react/24/outline";
+import { XMarkIcon, Bars3BottomLeftIcon } from "@heroicons/react/24/outline";
 import classNames from "classnames";
 import React, { Fragment, useState } from "react";
 import DogIcon from "../icons/DogIcon";
@@ -14,6 +10,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import { useAuth } from "../../lib/auth/useAuth";
+import { ArrowLeftOnRectangleIcon } from "@heroicons/react/20/solid";
 type Props = {
   children: React.ReactNode;
 };
@@ -50,7 +47,7 @@ const userNavigation = [
 export default function Sidebar({ children }: Props) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const router = useRouter();
-  const { user, setUser } = useAuth();
+  const { user, logout } = useAuth();
 
   return (
     <>
@@ -107,12 +104,20 @@ export default function Sidebar({ children }: Props) {
                   </div>
                 </Transition.Child>
                 <div className="flex flex-shrink-0 items-center px-4">
-                  <Image
-                    src="/imgs/pawshop_logo.png"
-                    width={200}
-                    height={200}
-                    alt="logo"
-                  />
+                  <Link
+                    href="/"
+                    className="flex h-16 flex-shrink-0 items-center gap-2"
+                  >
+                    <Image
+                      src="/imgs/pawshop_logo.png"
+                      width={50}
+                      height={50}
+                      alt="logo"
+                    />
+                    <h1 className="text-xl font-bold tracking-wide text-white">
+                      Pawshop
+                    </h1>
+                  </Link>
                 </div>
                 <div className="mt-5 h-0 flex-1 overflow-y-auto">
                   <nav className="space-y-1 px-2">
@@ -207,11 +212,12 @@ export default function Sidebar({ children }: Props) {
             <div className="flex flex-1"></div>
             <div className="ml-4 flex items-center md:ml-6">
               <button
+                onClick={async () => await logout()}
                 type="button"
                 className="rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
                 <span className="sr-only">View notifications</span>
-                <BellIcon className="h-6 w-6" aria-hidden="true" />
+                <ArrowLeftOnRectangleIcon className="h-6 w-6" />
               </button>
 
               <Menu as="div" className="relative ml-3">
@@ -227,7 +233,7 @@ export default function Sidebar({ children }: Props) {
                         height={50}
                       />
                     ) : (
-                      <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-gray-500">
+                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gray-500">
                         <span className="text-xl font-medium leading-none text-white">
                           {user && user?.name[0]?.toUpperCase()}
                         </span>
