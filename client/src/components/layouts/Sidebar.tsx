@@ -3,7 +3,6 @@ import { XMarkIcon, Bars3BottomLeftIcon } from "@heroicons/react/24/outline";
 import classNames from "classnames";
 import React, { Fragment, useState } from "react";
 import DogIcon from "../icons/DogIcon";
-import PodcastIcon from "../icons/PodcastIcon";
 import AlbumIcon from "../icons/AlbumIcon";
 import SettingsIcon from "../icons/SettingsIcon";
 import { useRouter } from "next/router";
@@ -22,11 +21,7 @@ const navigation = [
     icon: DogIcon,
     current: true,
   },
-  {
-    name: "Announcements",
-    href: "/dashboard/announcements",
-    icon: PodcastIcon,
-  },
+
   {
     name: "Reservations",
     href: "/dashboard/reservations",
