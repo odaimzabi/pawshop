@@ -78,7 +78,13 @@ type Props = {
   children: React.ReactNode;
 };
 
-const AuthStatus = ({ user }: { user: User }) => (
+const AuthStatus = ({
+  user,
+  logout,
+}: {
+  user: User;
+  logout: () => Promise<void>;
+}) => (
   <>
     {!user ? (
       <div className="hidden items-center justify-end gap-4 md:flex md:flex-1 lg:w-0">
@@ -97,12 +103,12 @@ const AuthStatus = ({ user }: { user: User }) => (
       </div>
     ) : (
       <div className="hidden items-center justify-end gap-4 md:flex md:flex-1 lg:w-0">
-        <Link
-          href="/auth/login"
+        <button
+          onClick={async () => await logout()}
           className="text-indigo-600 hover:text-indigo-500"
         >
           Logout
-        </Link>
+        </button>
         <Link
           href="/dashboard/animals"
           className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
@@ -285,7 +291,7 @@ export default function Header({ children }: Props) {
               )}
             </Popover>
           </Popover.Group>
-          <AuthStatus user={user} />
+          <AuthStatus user={user} logout={logout} />
         </div>
 
         <Transition
@@ -361,7 +367,7 @@ export default function Header({ children }: Props) {
                   </Link>
                 </nav>
                 <div className="mt-6">
-                  <AuthStatus user={user} />
+                  <AuthStatus user={user} logout={logout} />
                 </div>
               </div>
             </div>
