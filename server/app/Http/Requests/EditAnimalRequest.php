@@ -30,6 +30,8 @@ class EditAnimalRequest extends FormRequest
             "color" => "required|string|max:10",
             "vaccinated" => "required|boolean",
             "weight" => "required|string|max:255",
+            "location" => "required|string|max:255",
+            "description" => "required|string|min:10|max:255",
             "name" => "required|string|max:255",
             "image" => "sometimes|string|max:255"
         ];

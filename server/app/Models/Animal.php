@@ -10,7 +10,7 @@ class Animal extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["name", "age", "gender", "color", "vaccinated", "weight", "user_id", "image"];
+    protected $fillable = ["name", "age", "gender", "color", "vaccinated", "weight", "user_id", "image", "location", "description"];
 
     public function user()
     {

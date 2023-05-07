@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Announce;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AnimalController;
@@ -33,10 +32,10 @@ Route::prefix("/animal")->group(function () {
     Route::middleware("auth:sanctum")->put("/{id}", [AnimalController::class, "edit"])->name("animal.edit");
     Route::middleware("auth:sanctum")->get("/", [AnimalController::class, "showAll"])->name("animal.showAll");
     Route::middleware("auth:sanctum")->get("/{id}", [AnimalController::class, "showOne"])->name("animal.showOne");
+    Route::middleware("auth:sanctum")->put("/publish/{id}", [AnimalController::class, "publish"])->name("animal.publish");
 });
 Route::prefix("/announce")->group(function () {
-    Route::post("/", [AnnounceController::class, "create"])->name("announce.create");
-    Route::get("/animals", [AnnounceController::class, "showAnimals"])->name("announce.showAnimals");
+    Route::get("/", [AnnounceController::class, "show"])->name("announce.show");
 });
 
 Route::prefix("/settings")->group(function () {

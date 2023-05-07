@@ -3,21 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Models\Animal;
-use App\Models\Announce;
-use Illuminate\Http\Request;
+use App\Services\S3Service;
 
 class AnnounceController extends Controller
+
 {
-    public function create(Request $request)
+    protected $s3;
+
+    public function __construct(S3Service $s3)
     {
-        Announce::create(["user_id" => 1, "image" => "", "description" => "test", "title" => "test", "video" => ""]);
-        return response()->json(["test" => Announce::with("animal")->get()], 201);
+        $this->s3 = $s3;
     }
 
-    public function showAnimals(Request $request)
+    public function show()
     {
-        $animals = Animal::with('user:id')->where('user_id', $request->user()->id)->get(["id", "name"]);
-        $animals->makeHidden("user");
+        $animals = Animal::select("id", "name", "image", "vaccinated", "published")->where("published", 1)->get();
+        $animals->makeHidden("published");
+
+        foreach ($animals as $animal) {
+            $animal["image"] = $this->s3->getFile($animal->image);
+        }
+
         return response()->json(["animals" => $animals], 200);
     }
 }

@@ -118,19 +118,20 @@ export default function CreateAnimalForm() {
       >
         <div className="border-2 sm:overflow-hidden sm:rounded-md">
           <div className="bg-white px-4 py-6 sm:p-6">
-            <div>
-              <h2
-                id="payment-details-heading"
-                className="text-lg font-medium leading-6 text-gray-900"
-              >
-                New Animal
-              </h2>
-              <p className="mt-1 text-sm text-gray-500">
-                Please fill in the inputs to add your new animal into the
-                account
-              </p>
+            <div className="flex items-center justify-between ">
+              <div>
+                <h2
+                  id="payment-details-heading"
+                  className="text-lg font-medium leading-6 text-gray-900"
+                >
+                  New Animal
+                </h2>
+                <p className="mt-1 text-sm text-gray-500">
+                  Please fill in the inputs to add your new animal into the
+                  account
+                </p>
+              </div>
             </div>
-
             <div className="mt-6 grid grid-cols-4 gap-6">
               <div className="col-span-4 sm:col-span-2">
                 <label

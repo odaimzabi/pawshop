@@ -41,7 +41,7 @@ class AnimalController extends Controller
         $animal = Animal::where([
             ["user_id", $request->user()->id],
             ["id", $id]
-        ])->first(["name", "age", "gender", "color", "vaccinated", "weight", "image"]);
+        ])->first(["name", "age", "gender", "color", "vaccinated", "weight", "image", "description", "location"]);
 
         if ($animal == null) {
             return response()->json(["success" => false, "animal" => null], 404);
@@ -55,6 +55,23 @@ class AnimalController extends Controller
         if (!$animal) {
             return response()->json(["success" => false, "message" => "Animal not found"], 404);
         }
-        return response()->json(["success" => true, "message" => "Animal edited"], 201);
+        return response()->json(["success" => true, "message" => "Animal edited"], 200);
+    }
+
+    public function publish(string $id)
+    {
+        $animal = Animal::select("id", "published")->where("id", $id)->first();
+        if (!$animal) {
+            return response()->json(["success" => false, "message" => "Animal not found"], 404);
+        }
+
+        if ($animal->published) {
+            return response()->json(["success" => false, "message" => "Animal is already published"], 400);
+        }
+
+        $animal->published = true;
+        $animal->update();
+
+        return response()->json(["success" => true, "message" => "Animal is published"], 200);
     }
 }

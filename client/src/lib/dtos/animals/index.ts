@@ -28,6 +28,8 @@ export const editAnimalShape = z.object({
   color: z.string(),
   vaccinated: z.union([z.string().min(1), z.boolean()]),
   weight: z.string().min(1),
+  location: z.string().min(1),
+  description: z.string().min(10),
   gender: z
     .string()
     .min(1)
@@ -44,6 +46,10 @@ export const editAnimalShape = z.object({
 
 export type CreateAnimalDto = z.infer<typeof createAnimalShape>;
 export type CreateAnimalResponse = CreateAnimalDto & { id: number };
+export type PublishAnimalResponse = {
+  message: string;
+  success: boolean;
+};
 export type EditAnimalDto = z.infer<typeof editAnimalShape>;
 export type Animal = {
   id: number;
@@ -54,4 +60,6 @@ export type Animal = {
   weight: string;
   gender: string;
   image: string;
+  description:string
+  location:string
 };

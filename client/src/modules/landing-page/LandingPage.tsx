@@ -5,6 +5,7 @@ import DogIcon from "../../components/icons/DogIcon";
 import PodcastIcon from "../../components/icons/PodcastIcon";
 import HandShakeIcon from "../../components/icons/HandShakeIcon";
 import AppLayout from "../../components/layouts/AppLayout";
+import Link from "next/link";
 
 const features = [
   {
@@ -81,18 +82,18 @@ export default function LandingPage() {
 
                   <div className="mx-auto mt-10 max-w-sm sm:flex sm:max-w-none sm:justify-center">
                     <div className="space-y-4 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5 sm:space-y-0">
-                      <a
-                        href="#"
+                      <Link
+                        href="/auth/login"
                         className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-indigo-700 shadow-sm hover:bg-indigo-50 sm:px-8"
                       >
-                        Get started
-                      </a>
-                      <a
-                        href="#"
+                        Get Started
+                      </Link>
+                      <Link
+                        href="/announces"
                         className="flex items-center justify-center rounded-md border border-transparent bg-indigo-500 bg-opacity-60 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-opacity-70 sm:px-8"
                       >
-                        Live demo
-                      </a>
+                        Checkout Animals
+                      </Link>
                     </div>
                   </div>
                 </div>
