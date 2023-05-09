@@ -11,7 +11,7 @@ echo "Caching routes..."
 php artisan route:cache
 
 echo "Delete all tables..."
-php artisan db:wipe
+php artisan db:wipe --force
 
 echo "Running migrations"
 php artisan migrate --force
